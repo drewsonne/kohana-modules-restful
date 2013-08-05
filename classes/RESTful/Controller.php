@@ -207,8 +207,35 @@ abstract class RESTful_Controller extends Controller
         if ($content === NULL)
             return $this->response->body();
 
+        $content = $this->_process_orm_object($content);
         $this->response->body($this->_render_response_data($content));
         return $this;
+    }
+
+    /**
+     * If there are ORM objects in the response, convert to them arrays.
+     * @param $content
+     */
+    protected function _process_orm_object($content)
+    {
+        switch (get_class($content)) {
+            case 'Database_MySQL_Result':
+                $content = array_map(function ($item) {
+                    return $item->as_array();
+                }, $content->as_array());
+                break;
+            default:
+                if ($content instanceof ORM) {
+                    if($content->loaded()) {
+                        $content = $content->as_array();
+                    }
+                } else {
+                    var_dump($content);
+                    die();
+                }
+                break;
+        }
+        return $content;
     }
 
     /**
