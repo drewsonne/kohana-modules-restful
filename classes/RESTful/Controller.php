@@ -218,6 +218,10 @@ abstract class RESTful_Controller extends Controller
      */
     protected function _process_orm_object($content)
     {
+        if(is_array($content)) {
+            return $content;
+        }
+
         switch (get_class($content)) {
             case 'Database_MySQL_Result':
                 $content = array_map(function ($item) {
