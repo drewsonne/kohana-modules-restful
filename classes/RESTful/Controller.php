@@ -261,6 +261,7 @@ abstract class RESTful_Controller extends Controller
             {
                 $this->response->body($body);
                 $success = TRUE;
+                $this->response->headers('Content-type', $type);
                 break;
             }
         }
