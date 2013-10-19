@@ -218,7 +218,7 @@ abstract class RESTful_Controller extends Controller
      */
     protected function _process_orm_object($content)
     {
-        if(is_array($content)) {
+        if(is_array($content) || !is_object($content)) {
             return $content;
         }
 

@@ -16,7 +16,7 @@ class RESTful_Response_Renderer_JSON implements RESTful_Response_IRenderer
      */
     static public function render($data)
     {
-        $json = json_encode($data);
+        $json = json_encode($data, JSON_NUMERIC_CHECK);
 
         return (json_last_error() === JSON_ERROR_NONE) ? self::format($json) : FALSE;
     }
